@@ -60,7 +60,7 @@ export default {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
         },
         {
-          title: "Systemadministrator",
+          title: "Systemadministrator w/m/d",
           person: "The Net Ninja",
           due: "1st Jan 2019",
           status: "ongoing",

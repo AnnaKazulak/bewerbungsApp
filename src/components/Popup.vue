@@ -44,7 +44,12 @@
             </v-menu>
             <v-spacer></v-spacer>
 
-            <v-btn text class="success mx-0 mt-3" @click="submit">
+            <v-btn
+              text
+              class="success mx-0 mt-3"
+              @click="submit"
+              :loading="loading"
+            >
               Hinzufügen
             </v-btn>
           </v-form>
@@ -56,27 +61,43 @@
 <script>
 // mit npm die Bibliothek data-fns instaliert und hier importiert:
 import { format } from "date-fns";
+import db from "@/fb";
 export default {
   data() {
     return {
       // date: new Date().toISOString().substr(0, 10),
-      date: null,
-      menu2: false,
       title: "",
       content: "",
       due: null,
-      dialog: false,
       menu: false,
       inputRules: [
-        (v) => !!v || "This field is required",
-        (v) => v?.length >= 3 || "Minimum length is 3 characters",
+        (v) => !!v || "Dieses Feld ist erforderlich",
+        (v) => v?.length >= 3 || "Geben Sie bitte miniumum 3 Zeichenen",
       ],
+      loading: false,
+      dialog: false,
     };
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.title, this.content);
+        this.loading = true;
+        // console.log(this.title, this.content);
+        const project = {
+          title: this.title,
+          content: this.content,
+          // due: format(this.due, "Do MMM YYYY"),
+          // due: format(parseISO(this.due), "do MMM YYY"),
+          due: this.due,
+          person: "Anna",
+          status: "ongoing",
+        };
+        db.collection("projects")
+          .add(project)
+          .then(() => {
+            this.loading = false;
+            this.dialog = false;
+          });
       }
     },
   },

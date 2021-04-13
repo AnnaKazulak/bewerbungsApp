@@ -4,12 +4,14 @@
     <v-container class="my-5">
       <!-- we use v-layout for grid -->
       <v-layout row class="mb-3">
-        <v-btn small text color="grey" @click="sortBy('status')" v-on="on">
+        <v-btn small text color="grey" @click="sortBy('status')">
+          <!-- <v-btn small text color="grey" @click="sortBy('status')" v-on="on"> -->
           <v-icon left small>mdi-timer-outline</v-icon>
           <span right class="caption text-lowercase">sortiere nach Status</span>
         </v-btn>
 
-        <v-btn small text color="grey" @click="sortBy('person')" v-on="on">
+        <v-btn small text color="grey" @click="sortBy('person')">
+          <!-- <v-btn small text color="grey" @click="sortBy('person')" v-on="on"> -->
           <v-icon left small>mdi-account</v-icon>
           <span right class="caption text-lowercase"
             >sortiere nach Mitarbeiter</span
