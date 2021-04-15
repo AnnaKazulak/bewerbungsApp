@@ -1,5 +1,9 @@
 <template>
   <nav>
+    <v-snackbar v-model="snackbar" color="success" centered :timeout="4000">
+      <span>Die Aufgabe wurde erfolgreich hinzugefügt!</span>
+      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
     <v-app-bar app>
       <v-app-bar-nav-icon
         class="textColor--text"
@@ -29,7 +33,7 @@
         </v-flex>
 
         <v-flex class="mt-4 mb-3">
-          <Popup />
+          <Popup @projectAdded="snackbar = true" />
         </v-flex>
       </v-layout>
       <v-list>
@@ -70,6 +74,7 @@ export default {
         },
         { icon: "mdi-account", text: "Bewerber", route: "/bewerber" },
       ],
+      snackbar: false,
     };
   },
 };
