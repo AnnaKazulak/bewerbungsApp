@@ -52,60 +52,33 @@
 
 <script>
 // @ is an alias to /src
+import db from "@/fb";
 
 export default {
   name: "Home",
   data() {
     return {
-      projects: [
-        {
-          title: "Stellenanzeige für Web Dev erstellen",
-          person: "Nadine",
-          due: "1st Mai 2021",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Bewerberpool vorbereiten",
-          person: "Edna",
-          due: "15th März 2021",
-          status: "complete",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Hiring Manager - Frontend kontaktieren",
-          person: "Jochannes",
-          due: "20th April 2021",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title:
-            "Rückmeldung von Hiring Manager - Frontend bzl. Stellenanzeige holen",
-          person: "Martin",
-          due: "10th Mai 2021",
-          status: "overdue",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Arbeitsvertrag für Jan Kowalski vorbereiten",
-          person: "Martin",
-          due: "5th April 2021",
-          status: "complete",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-      ],
+      projects: [],
     };
   },
   methods: {
     sortBy(prop) {
       this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
     },
+  },
+  created() {
+    db.collection("projects").onSnapshot((res) => {
+      const changes = res.docChanges();
+
+      changes.forEach((change) => {
+        if (change.type === "added") {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id,
+          });
+        }
+      });
+    });
   },
 };
 </script>
